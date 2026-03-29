@@ -1,49 +1,39 @@
-# UC6 – Create and manage Pandas Series and DataFrames from different data sources
+# UC7 – Perform DataFrame slicing, filtering, and column selection operations
 
 import pandas as pd
 
 
 class DataProcessing:
 
-    def pandas_series_dataframe(self):
-        # Series
-        series = pd.Series([10, 20, 30, 40])
-        print("Series:\n", series)
-
-        # DataFrame from dictionary
+    def pandas_slicing_filtering(self):
         data = {
-            "Name": ["Alice", "Bob"],
-            "Age": [25, 30]
+            "Name": ["Alice", "Bob", "Charlie", "David"],
+            "Age": [25, 30, 35, 28],
+            "Salary": [50000, 60000, 70000, 55000]
         }
-        df_dict = pd.DataFrame(data)
-        print("\nDataFrame from Dictionary:\n", df_dict)
 
-        # DataFrame from list of records
-        records = [
-            {"Name": "John", "Age": 28},
-            {"Name": "Jane", "Age": 32}
-        ]
-        df_list = pd.DataFrame(records)
-        print("\nDataFrame from List:\n", df_list)
+        df = pd.DataFrame(data)
+        print("Original DataFrame:\n", df)
 
-        # Read CSV
-        try:
-            df_csv = pd.read_csv("data.csv")
-            print("\nDataFrame from CSV:\n", df_csv.head())
-        except FileNotFoundError:
-            print("\nCSV file not found (data.csv)")
+        # Column selection
+        print("\nSelect 'Name' column:\n", df["Name"])
 
-        # Read JSON
-        try:
-            df_json = pd.read_json("data.json")
-            print("\nDataFrame from JSON:\n", df_json.head())
-        except FileNotFoundError:
-            print("\nJSON file not found (data.json)")
+        # Multiple columns
+        print("\nSelect Name and Salary:\n", df[["Name", "Salary"]])
+
+        # Row slicing
+        print("\nFirst two rows:\n", df[0:2])
+
+        # Filtering
+        print("\nAge > 28:\n", df[df["Age"] > 28])
+
+        # Combined filtering + column selection
+        print("\nFiltered Names (Salary > 55000):\n", df[df["Salary"] > 55000]["Name"])
 
 
 def main():
     dp = DataProcessing()
-    dp.pandas_series_dataframe()
+    dp.pandas_slicing_filtering()
 
 
 if __name__ == "__main__":
