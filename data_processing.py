@@ -1,37 +1,37 @@
-# UC9 – Handle missing and duplicate data with cleaning techniques in DataFrames
+# UC10 – Perform aggregation and group-by operations for data analysis and summarization
 
 import pandas as pd
-import numpy as np
 
 
 class DataProcessing:
 
-    def pandas_data_cleaning(self):
+    def pandas_groupby_aggregation(self):
         data = {
-            "Name": ["Alice", "Bob", "Charlie", "Alice"],
-            "Age": [25, np.nan, 35, 25],
-            "Salary": [50000, 60000, None, 50000]
+            "Department": ["IT", "HR", "IT", "HR", "Finance"],
+            "Employee": ["A", "B", "C", "D", "E"],
+            "Salary": [50000, 40000, 60000, 45000, 70000]
         }
 
         df = pd.DataFrame(data)
         print("Original DataFrame:\n", df)
 
-        # Detect missing values
-        print("\nMissing Values:\n", df.isnull())
+        # GroupBy with sum
+        print("\nSalary Sum by Department:\n", df.groupby("Department")["Salary"].sum())
 
-        # Fill missing values
-        df["Age"].fillna(df["Age"].mean(), inplace=True)
-        df["Salary"].fillna(0, inplace=True)
-        print("\nAfter Filling Missing Values:\n", df)
+        # GroupBy with mean
+        print("\nAverage Salary by Department:\n", df.groupby("Department")["Salary"].mean())
 
-        # Remove duplicates
-        df_cleaned = df.drop_duplicates()
-        print("\nAfter Removing Duplicates:\n", df_cleaned)
+        # GroupBy with count
+        print("\nEmployee Count by Department:\n", df.groupby("Department")["Employee"].count())
+
+        # Multiple aggregations
+        print("\nMultiple Aggregations:\n",
+              df.groupby("Department")["Salary"].agg(["sum", "mean", "max", "min"]))
 
 
 def main():
     dp = DataProcessing()
-    dp.pandas_data_cleaning()
+    dp.pandas_groupby_aggregation()
 
 
 if __name__ == "__main__":
