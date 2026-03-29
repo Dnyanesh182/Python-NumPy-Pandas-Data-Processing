@@ -1,40 +1,37 @@
-# UC8 – Apply arithmetic operations and modify DataFrame columns dynamically
+# UC9 – Handle missing and duplicate data with cleaning techniques in DataFrames
 
 import pandas as pd
+import numpy as np
 
 
 class DataProcessing:
 
-    def pandas_arithmetic_modification(self):
+    def pandas_data_cleaning(self):
         data = {
-            "Name": ["Alice", "Bob", "Charlie"],
-            "Price": [100, 200, 150],
-            "Quantity": [2, 3, 4]
+            "Name": ["Alice", "Bob", "Charlie", "Alice"],
+            "Age": [25, np.nan, 35, 25],
+            "Salary": [50000, 60000, None, 50000]
         }
 
         df = pd.DataFrame(data)
         print("Original DataFrame:\n", df)
 
-        # Arithmetic operation (new column)
-        df["Total"] = df["Price"] * df["Quantity"]
-        print("\nAfter Adding Total Column:\n", df)
+        # Detect missing values
+        print("\nMissing Values:\n", df.isnull())
 
-        # Modify existing column
-        df["Price"] = df["Price"] + 10
-        print("\nAfter Updating Price:\n", df)
+        # Fill missing values
+        df["Age"].fillna(df["Age"].mean(), inplace=True)
+        df["Salary"].fillna(0, inplace=True)
+        print("\nAfter Filling Missing Values:\n", df)
 
-        # Apply function (e.g., discount)
-        df["Discounted_Total"] = df["Total"].apply(lambda x: x * 0.9)
-        print("\nAfter Applying Discount:\n", df)
-
-        # Multiple column operation
-        df["Final_Amount"] = df["Discounted_Total"] + 50
-        print("\nFinal DataFrame:\n", df)
+        # Remove duplicates
+        df_cleaned = df.drop_duplicates()
+        print("\nAfter Removing Duplicates:\n", df_cleaned)
 
 
 def main():
     dp = DataProcessing()
-    dp.pandas_arithmetic_modification()
+    dp.pandas_data_cleaning()
 
 
 if __name__ == "__main__":
